@@ -1,3 +1,5 @@
+from typing import Dict, List
+
 from marshmallow import ValidationError
 
 from classes.procedure import create_generator
@@ -9,7 +11,7 @@ class UserRequest:
     """
     Класс объектов "запрос"
     """
-    def __init__(self, user_request):
+    def __init__(self, user_request: Dict[str, str]):
         correct_data = self._is_correct_request(user_request)
         self.__cmd1 = correct_data['cmd1']
         self.__val1 = correct_data['val1']
@@ -22,7 +24,7 @@ class UserRequest:
             #Устанавливаем значение по умолчанию
             self.__file_name = DATA_DIR
 
-    def _is_correct_request(self, user_request):
+    def _is_correct_request(self, user_request: Dict[str, str]) -> Dict[str, str]:
         """
         Функция валидации запроса
         """
@@ -31,7 +33,7 @@ class UserRequest:
         except ValidationError as err:
             raise err
 
-    def create_procedure(self):
+    def create_procedure(self) -> List[str]:
         """
         Функция формирования и обработки файла по данным из запроса
         """
@@ -40,21 +42,21 @@ class UserRequest:
         return list(DEF_TYPE_COMMAND[self.cmd2](value=self.val2, data=preparing_data))
 
     @property
-    def cmd1(self):
+    def cmd1(self) -> str:
         return self.__cmd1
 
     @property
-    def cmd2(self):
+    def cmd2(self) -> str:
         return self.__cmd2
 
     @property
-    def val1(self):
+    def val1(self) -> str:
         return self.__val1
 
     @property
-    def val2(self):
+    def val2(self) -> str:
         return self.__val2
 
     @property
-    def file_name(self):
+    def file_name(self) -> str:
         return self.__file_name

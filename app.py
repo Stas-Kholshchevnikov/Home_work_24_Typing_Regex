@@ -1,4 +1,6 @@
-from flask import Flask, jsonify
+from typing import Any, Tuple
+
+from flask import Flask, jsonify, Response
 from marshmallow import ValidationError
 
 from view.request import request_bp
@@ -8,7 +10,7 @@ app.register_blueprint(request_bp)
 
 
 @app.errorhandler(ValidationError)
-def validation_error(err):
+def validation_error(err: ValidationError) -> Tuple[Response, int]:
     """
     Функция перехвата ошибки валидации запроса пользователя
     """
